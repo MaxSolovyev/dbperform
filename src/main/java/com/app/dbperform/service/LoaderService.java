@@ -12,6 +12,7 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,6 +25,8 @@ public class LoaderService {
     }
 
     public String loadFile(MultipartFile multipartFile) {
+        long start = System.currentTimeMillis();
+
         EntityManager entityManager = emf.createEntityManager();
 
         entityManager.setFlushMode(FlushModeType.COMMIT);
@@ -115,6 +118,7 @@ public class LoaderService {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "ok";
+        long time = System.currentTimeMillis() - start;
+        return Long.toString(time/1000);
     }
 }
